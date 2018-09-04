@@ -10,8 +10,6 @@ import (
 	"github.com/pkg/errors"
 	"zikichombo.org/ext/flac"
 	"zikichombo.org/sio"
-	"zikichombo.org/sound"
-	"zikichombo.org/sound/sample"
 )
 
 func usage() {
@@ -43,12 +41,6 @@ func play(flacPath string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	// Open sound output device.
-	q, e := sio.DefaultOutputDev.Output(sound.StereoCd(), sample.SFloat32L, 256)
-	if e != nil {
-		return errors.WithStack(err)
-	}
-	defer q.Close()
 	// Play sound.
 	if err := sio.Play(dec); err != nil {
 		return errors.WithStack(err)
